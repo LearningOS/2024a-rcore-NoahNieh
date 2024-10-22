@@ -1,11 +1,9 @@
 //! Process management syscalls
+
 use crate::{
-    config::MAX_SYSCALL_NUM,
-    task::{
-        change_program_brk, exit_current_and_run_next, get_current_task_running_time,
-        get_current_task_status, get_current_task_sys_call_times, suspend_current_and_run_next,
-        TaskStatus,
-    },
+    config::MAX_SYSCALL_NUM, mm::{write_to_user_buffer, VirtAddr}, task::{
+        change_program_brk, current_user_token, exit_current_and_run_next, get_current_task_running_time, get_current_task_status, get_current_task_sys_call_times, mmap, munmap, suspend_current_and_run_next, TaskStatus
+    }, timer::get_time_us
 };
 
 #[repr(C)]
@@ -45,10 +43,20 @@ pub fn sys_yield() -> isize {
 /// HINT: What if [`TimeVal`] is splitted by two pages ?
 pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
     trace!("kernel: sys_get_time");
-    -1
+    let us = get_time_us();
+    let result = TimeVal {
+            sec: us / 1_000_000,
+            usec: us % 1_000_000,
+    };
+    let token = current_user_token();
+    let len = core::mem::size_of::<TimeVal>();
+    write_to_user_buffer(token, _ts as *const u8, len, unsafe {
+        core::slice::from_raw_parts(&result as *const TimeVal as *const u8, len)
+    });
+    0
 }
 
-pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
+pub fn sys_task_info(ti: *mut TaskInfo) -> isize {
     trace!("kernel: sys_task_info");
     let status = get_current_task_status();
     let syscall_times = get_current_task_sys_call_times();
@@ -56,13 +64,16 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
     if let (Some(status), Some(syscall_times), Some(running_time)) =
         (status, syscall_times, running_time)
     {
-        unsafe {
-            *_ti = TaskInfo {
-                status,
-                syscall_times,
-                time: running_time,
-            }
-        }
+        let result = TaskInfo {
+            status,
+            syscall_times,
+            time: running_time,
+        };
+        let token = current_user_token();
+        let len = core::mem::size_of::<TaskInfo>();
+        write_to_user_buffer(token, ti as *const u8, len, unsafe {
+            core::slice::from_raw_parts(&result as *const TaskInfo as *const u8, len)
+        });
         0
     } else {
         -1
@@ -72,13 +83,37 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
 // YOUR JOB: Implement mmap.
 pub fn sys_mmap(_start: usize, _len: usize, _port: usize) -> isize {
     trace!("kernel: sys_mmap NOT IMPLEMENTED YET!");
-    -1
+    let start_va:VirtAddr= _start.into();
+    if !start_va.aligned() {
+        return -1;
+    }
+    if (_port & (!0x7)) != 0 || (_port & 0x7) == 0 {
+        return -1;
+    }
+    let end_va: VirtAddr = (_start + _len).into();
+    let start_vpn = start_va.floor();
+    let end_vpn = end_va.ceil();
+    match mmap(start_vpn, end_vpn, _port) {
+        Ok(_) => 0,
+        Err(_) => -1
+    }
+
 }
 
 // YOUR JOB: Implement munmap.
 pub fn sys_munmap(_start: usize, _len: usize) -> isize {
     trace!("kernel: sys_munmap NOT IMPLEMENTED YET!");
-    -1
+    let start_va:VirtAddr= _start.into();
+    if !start_va.aligned() {
+        return -1;
+    }
+    let start_vpn = start_va.floor();
+    let end_va: VirtAddr = (_start + _len).into();
+    let end_vpn = end_va.ceil();
+    match munmap(start_vpn, end_vpn) {
+        Ok(_) => 0,
+        Err(_) => -1
+    }
 }
 /// change data segment size
 pub fn sys_sbrk(size: i32) -> isize {

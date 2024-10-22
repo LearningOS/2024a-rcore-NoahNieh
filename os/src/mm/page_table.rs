@@ -171,3 +171,14 @@ pub fn translated_byte_buffer(token: usize, ptr: *const u8, len: usize) -> Vec<&
     }
     v
 }
+
+/// write to buffer
+pub fn write_to_user_buffer(token: usize, ptr: *const u8, len: usize, data: &[u8]) {
+    let mut buffers = translated_byte_buffer(token, ptr, len);
+    let mut start = 0;
+    for buffer in buffers.iter_mut() {
+        let len = buffer.len();
+        buffer.copy_from_slice(&data[start..start + len]);
+        start += len;
+    }
+}

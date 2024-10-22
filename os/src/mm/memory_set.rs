@@ -262,6 +262,40 @@ impl MemorySet {
             false
         }
     }
+
+    /// check the arena is allocated
+    pub fn is_allocated(&mut self, start: VirtPageNum, end: VirtPageNum) -> bool {
+        for area in self.areas.iter() {
+            if area.vpn_range.is_overlap_with(&VPNRange::new(start, end)) {
+                return true;
+            }
+        }
+        false
+    }
+
+    ///  memory map
+    pub fn mmap(&mut self, start: VirtPageNum, end:VirtPageNum, flags: MapPermission) {
+        let mut area = MapArea::new(start.into(), end.into(), MapType::Framed, flags);
+        area.map(&mut self.page_table);
+        self.areas.push(area);
+    }
+
+    /// memory unmap
+    pub fn munmap(&mut self, start: VirtPageNum, end: VirtPageNum) -> Result<(), ()> {
+        let mut remove = None;
+        for (i, ele) in self.areas.iter_mut().enumerate() {
+            if ele.vpn_range.get_start() == start && ele.vpn_range.get_end() == end {
+                ele.unmap(&mut self.page_table);
+                remove = Some(i);
+                break;
+            }
+        }
+        remove.and_then(|remove| {
+            self.areas.remove(remove);
+            Some(())
+        }).ok_or(())
+    }
+
 }
 /// map area structure, controls a contiguous piece of virtual memory
 pub struct MapArea {

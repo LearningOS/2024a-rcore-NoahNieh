@@ -14,8 +14,9 @@ mod switch;
 #[allow(clippy::module_inception)]
 mod task;
 
-use crate::loader::{get_app_data, get_num_app};
 use crate::config::MAX_SYSCALL_NUM;
+use crate::loader::{get_app_data, get_num_app};
+use crate::mm::{MapPermission, VirtPageNum};
 use crate::sync::UPSafeCell;
 use crate::trap::TrapContext;
 use alloc::vec::Vec;
@@ -144,7 +145,7 @@ impl TaskManager {
             let mut inner = self.inner.exclusive_access();
             let current = inner.current_task;
             inner.tasks[next].task_status = TaskStatus::Running;
-            if inner.tasks[next].start_ts== 0 {
+            if inner.tasks[next].start_ts == 0 {
                 inner.tasks[next].start_ts = get_time_ms();
             }
             inner.current_task = next;
@@ -210,36 +211,27 @@ pub fn change_program_brk(size: i32) -> Option<usize> {
     TASK_MANAGER.change_current_program_brk(size)
 }
 /// Get time info of the current task.
-pub fn get_current_task_running_time() -> Option<usize>{
+pub fn get_current_task_running_time() -> Option<usize> {
     let cur_task = TASK_MANAGER.inner.exclusive_access().current_task;
     let inner = TASK_MANAGER.inner.exclusive_access();
     let task = inner.tasks.get(cur_task);
-    task.map(|task|
-    {
-        get_time_ms() - task.start_ts
-    })
+    task.map(|task| get_time_ms() - task.start_ts)
 }
 
 /// Get sys call times of the current task
-pub fn get_current_task_sys_call_times() -> Option<[u32; MAX_SYSCALL_NUM]>{
+pub fn get_current_task_sys_call_times() -> Option<[u32; MAX_SYSCALL_NUM]> {
     let cur_task = TASK_MANAGER.inner.exclusive_access().current_task;
     let inner = TASK_MANAGER.inner.exclusive_access();
     let task = inner.tasks.get(cur_task);
-    task.map(|task|
-    {
-        task.syscall_times
-    })
+    task.map(|task| task.syscall_times)
 }
 
 /// Get status of the current task
-pub fn get_current_task_status() -> Option<TaskStatus>{
+pub fn get_current_task_status() -> Option<TaskStatus> {
     let cur_task = TASK_MANAGER.inner.exclusive_access().current_task;
     let inner = TASK_MANAGER.inner.exclusive_access();
     let task = inner.tasks.get(cur_task);
-    task.map(|task|
-    {
-        task.task_status
-    })
+    task.map(|task| task.task_status)
 }
 
 /// count syscall
@@ -247,9 +239,34 @@ pub fn inc_current_task_syscall_count(call_id: usize) {
     let cur_task = TASK_MANAGER.inner.exclusive_access().current_task;
     let mut inner = TASK_MANAGER.inner.exclusive_access();
     let task = inner.tasks.get_mut(cur_task);
-    task.map(|task|
-    {
-        task.syscall_times[call_id] += 1
-    });
+    task.map(|task| task.syscall_times[call_id] += 1);
+}
 
+/// mmap
+pub fn mmap(start_vpn: VirtPageNum, end_vpn: VirtPageNum, port: usize) -> Result<(), ()> {
+    let mut inner = TASK_MANAGER.inner.exclusive_access();
+    let cur_task = inner.current_task;
+    let task = inner.tasks.get_mut(cur_task);
+    if let (Some(task), Some(flags)) = (task, MapPermission::from_bits((port << 1) as u8)) {
+        if task.memory_set.is_allocated(start_vpn, end_vpn) {
+            return Err(());
+        }
+        task.memory_set.mmap(start_vpn, end_vpn, flags | MapPermission::U);
+        Ok(())
+    } else {
+        Err(())
+    }
+}
+
+/// memory unmap
+pub fn munmap(start_vpn: VirtPageNum, end_vpn: VirtPageNum) -> Result<(), ()>{
+    let mut inner = TASK_MANAGER.inner.exclusive_access();
+    let cur_task = inner.current_task;
+    let task = inner.tasks.get_mut(cur_task);
+    if let Some(task) = task {
+        task.memory_set.munmap(start_vpn, end_vpn)
+    } 
+    else {
+        Err(())
+    }
 }
