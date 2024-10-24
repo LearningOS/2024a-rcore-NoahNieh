@@ -60,6 +60,31 @@ impl MemorySet {
             None,
         );
     }
+
+    /// check the range is used
+    pub fn is_overlap(&self, start_va: VirtAddr, end_va: VirtAddr) -> bool {
+        for area in self.areas.iter() {
+            if area.vpn_range.get_start() >= start_va.floor()
+                && area.vpn_range.get_end() <= end_va.ceil()
+            {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// have allcated area
+    pub fn have_area(&self, start_va: VirtAddr, end_va: VirtAddr) -> bool {
+        for area in self.areas.iter() {
+            if area.vpn_range.get_start() == start_va.floor()
+                && area.vpn_range.get_end() == end_va.ceil()
+            {
+                return true;
+            }
+        }
+        false
+    }
+
     /// remove a area
     pub fn remove_area_with_start_vpn(&mut self, start_vpn: VirtPageNum) {
         if let Some((idx, area)) = self

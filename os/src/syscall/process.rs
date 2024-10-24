@@ -4,7 +4,7 @@ use alloc::sync::Arc;
 use crate::{
     config::MAX_SYSCALL_NUM,
     loader::get_app_data_by_name,
-    mm::{translated_refmut, translated_str},
+    mm::{translated_refmut, translated_str, MapPermission, VirtAddr},
     task::{
         add_task, current_task, current_user_token, exit_current_and_run_next,
         suspend_current_and_run_next, TaskStatus,
@@ -155,21 +155,51 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
 }
 
 /// YOUR JOB: Implement mmap.
-pub fn sys_mmap(_start: usize, _len: usize, _port: usize) -> isize {
+pub fn sys_mmap(start: usize, len: usize, port: usize) -> isize {
     trace!(
         "kernel:pid[{}] sys_mmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let start_va:VirtAddr = start.into();
+    let end_va :VirtAddr = (start + len).into();
+    if !start_va.aligned() || port & 0x7 == 0 || port & !0x7 != 0 {
+        return -1;
+    }
+    
+    let port = MapPermission::from_bits((port as u8) << 1);
+    if let (Some(task), Some(port)) = (current_task(), port) {
+        let mut inner_task = task.inner_exclusive_access();
+        if inner_task.memory_set.is_overlap(start_va, end_va) {
+            return -1;
+        }
+        inner_task.memory_set.insert_framed_area(start_va, end_va, port | MapPermission::U);
+        0
+    } else {
+        -1
+    }
 }
 
 /// YOUR JOB: Implement munmap.
-pub fn sys_munmap(_start: usize, _len: usize) -> isize {
+pub fn sys_munmap(start: usize, len: usize) -> isize {
     trace!(
         "kernel:pid[{}] sys_munmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let start_va:VirtAddr = start.into();
+    let end_va :VirtAddr = (start + len).into();
+    if !start_va.aligned()  {
+        return -1;
+    }
+    if let Some(task) = current_task() {
+        let mut inner_task = task.inner_exclusive_access();
+        if !inner_task.memory_set.have_area(start_va, end_va) {
+            return -1;
+        }
+        inner_task.memory_set.remove_area_with_start_vpn(start_va.floor());
+        0
+    } else {
+        -1
+    }
 }
 
 /// change data segment size
