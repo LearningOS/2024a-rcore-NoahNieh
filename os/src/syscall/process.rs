@@ -8,7 +8,7 @@ use crate::{
     task::{
         add_task, current_task, current_user_token, exit_current_and_run_next,
         suspend_current_and_run_next, TaskStatus,
-    },
+    }, timer::{get_time_ms, get_time_us},
 };
 
 #[repr(C)]
@@ -122,7 +122,14 @@ pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
         "kernel:pid[{}] sys_get_time NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let us = get_time_us();
+    let result = TimeVal {
+            sec: us / 1_000_000,
+            usec: us % 1_000_000,
+    };
+    let token = current_user_token();
+    *translated_refmut(token, _ts) = result;
+    0
 }
 
 /// YOUR JOB: Finish sys_task_info to pass testcases
@@ -133,7 +140,18 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
         "kernel:pid[{}] sys_task_info NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    if let Some(task) = current_task() {
+        let inner_task = task.inner_exclusive_access();
+        let ti = TaskInfo {
+            status: inner_task.task_status,
+            syscall_times: inner_task.syscall_times,
+            time: get_time_ms() - inner_task.start_ts,
+        };
+        *translated_refmut(inner_task.memory_set.token(),_ti) = ti;
+        0
+    } else {
+        -1
+    }
 }
 
 /// YOUR JOB: Implement mmap.
