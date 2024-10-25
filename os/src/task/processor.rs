@@ -7,6 +7,7 @@
 use super::__switch;
 use super::{fetch_task, TaskStatus};
 use super::{TaskContext, TaskControlBlock};
+use crate::config::BIG_STRIDE;
 use crate::sync::UPSafeCell;
 use crate::timer::get_time_ms;
 use crate::trap::TrapContext;
@@ -57,11 +58,13 @@ pub fn run_tasks() {
     loop {
         let mut processor = PROCESSOR.exclusive_access();
         if let Some(task) = fetch_task() {
+            let pid = task.pid.0;
             let idle_task_cx_ptr = processor.get_idle_task_cx_ptr();
             // access coming task TCB exclusively
             let mut task_inner = task.inner_exclusive_access();
             let next_task_cx_ptr = &task_inner.task_cx as *const TaskContext;
             task_inner.task_status = TaskStatus::Running;
+            task_inner.stride += BIG_STRIDE / task_inner.priority as usize;
             if task_inner.start_ts == 0 {
                 task_inner.start_ts = get_time_ms();
             }
@@ -72,6 +75,7 @@ pub fn run_tasks() {
             // release processor manually
             drop(processor);
             unsafe {
+                debug!("switch to task {}", pid);
                 __switch(idle_task_cx_ptr, next_task_cx_ptr);
             }
         } else {
