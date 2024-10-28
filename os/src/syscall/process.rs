@@ -5,11 +5,11 @@ use alloc::sync::Arc;
 use crate::{
     config::MAX_SYSCALL_NUM,
     fs::{open_file, OpenFlags},
-    mm::{translated_refmut, translated_str},
+    mm::{translated_refmut, translated_str, MapPermission, VirtAddr},
     task::{
         add_task, current_task, current_user_token, exit_current_and_run_next,
         suspend_current_and_run_next, TaskStatus,
-    },
+    }, timer::{get_time_ms, get_time_us},
 };
 
 #[repr(C)]
@@ -122,7 +122,14 @@ pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
         "kernel:pid[{}] sys_get_time NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let us = get_time_us();
+    let result = TimeVal {
+            sec: us / 1_000_000,
+            usec: us % 1_000_000,
+    };
+    let token = current_user_token();
+    *translated_refmut(token, _ts) = result;
+    0
 }
 
 /// YOUR JOB: Finish sys_task_info to pass testcases
@@ -133,25 +140,66 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
         "kernel:pid[{}] sys_task_info NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    if let Some(task) = current_task() {
+        let inner_task = task.inner_exclusive_access();
+        let ti = TaskInfo {
+            status: inner_task.task_status,
+            syscall_times: inner_task.syscall_times,
+            time: get_time_ms() - inner_task.start_ts,
+        };
+        *translated_refmut(inner_task.memory_set.token(),_ti) = ti;
+        0
+    } else {
+        -1
+    }
 }
 
 /// YOUR JOB: Implement mmap.
-pub fn sys_mmap(_start: usize, _len: usize, _port: usize) -> isize {
+pub fn sys_mmap(start: usize, len: usize, port: usize) -> isize {
     trace!(
         "kernel:pid[{}] sys_mmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let start_va:VirtAddr = start.into();
+    let end_va :VirtAddr = (start + len).into();
+    if !start_va.aligned() || port & 0x7 == 0 || port & !0x7 != 0 {
+        return -1;
+    }
+    
+    let port = MapPermission::from_bits((port as u8) << 1);
+    if let (Some(task), Some(port)) = (current_task(), port) {
+        let mut inner_task = task.inner_exclusive_access();
+        if inner_task.memory_set.is_overlap(start_va, end_va) {
+            return -1;
+        }
+        inner_task.memory_set.insert_framed_area(start_va, end_va, port | MapPermission::U);
+        0
+    } else {
+        -1
+    }
 }
 
 /// YOUR JOB: Implement munmap.
-pub fn sys_munmap(_start: usize, _len: usize) -> isize {
+pub fn sys_munmap(start: usize, len: usize) -> isize {
     trace!(
         "kernel:pid[{}] sys_munmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    let start_va:VirtAddr = start.into();
+    let end_va :VirtAddr = (start + len).into();
+    if !start_va.aligned()  {
+        return -1;
+    }
+    if let Some(task) = current_task() {
+        let mut inner_task = task.inner_exclusive_access();
+        if !inner_task.memory_set.have_area(start_va, end_va) {
+            return -1;
+        }
+        inner_task.memory_set.remove_area_with_start_vpn(start_va.floor());
+        0
+    } else {
+        -1
+    }
 }
 
 /// change data segment size
@@ -172,13 +220,32 @@ pub fn sys_spawn(_path: *const u8) -> isize {
         current_task().unwrap().pid.0
     );
     -1
+    // let token = current_user_token();
+    // let path = translated_str(token, path);
+    // if let Some(data) = get_app_data_by_name(path.as_str()) {
+    //     let task = current_task().unwrap();
+    //     let new_task = task.spawn(data);
+    //     let new_pid = new_task.pid.0;
+    //     let trap_cx = new_task.inner_exclusive_access().get_trap_cx();
+    //     trap_cx.x[10] = 0;
+    //     add_task(new_task);
+    //     new_pid as isize
+    // } else {
+    //     -1
+    // }
 }
 
 // YOUR JOB: Set task priority.
-pub fn sys_set_priority(_prio: isize) -> isize {
+pub fn sys_set_priority(prio: isize) -> isize {
     trace!(
         "kernel:pid[{}] sys_set_priority NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
+    if prio <= 1 {
+        return -1;
+    }
+    let cur_task = current_task().unwrap();
+    let mut inner = cur_task.inner_exclusive_access();
+    inner.priority = prio;
+    prio
 }
