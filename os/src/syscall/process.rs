@@ -4,12 +4,13 @@ use alloc::sync::Arc;
 
 use crate::{
     config::MAX_SYSCALL_NUM,
-    fs::{open_file, OpenFlags},
+    fs::{open_file, File, OpenFlags},
     mm::{translated_refmut, translated_str, MapPermission, VirtAddr},
     task::{
         add_task, current_task, current_user_token, exit_current_and_run_next,
         suspend_current_and_run_next, TaskStatus,
-    }, timer::{get_time_ms, get_time_us},
+    },
+    timer::{get_time_ms, get_time_us},
 };
 
 #[repr(C)]
@@ -124,8 +125,8 @@ pub fn sys_get_time(_ts: *mut TimeVal, _tz: usize) -> isize {
     );
     let us = get_time_us();
     let result = TimeVal {
-            sec: us / 1_000_000,
-            usec: us % 1_000_000,
+        sec: us / 1_000_000,
+        usec: us % 1_000_000,
     };
     let token = current_user_token();
     *translated_refmut(token, _ts) = result;
@@ -147,7 +148,7 @@ pub fn sys_task_info(_ti: *mut TaskInfo) -> isize {
             syscall_times: inner_task.syscall_times,
             time: get_time_ms() - inner_task.start_ts,
         };
-        *translated_refmut(inner_task.memory_set.token(),_ti) = ti;
+        *translated_refmut(inner_task.memory_set.token(), _ti) = ti;
         0
     } else {
         -1
@@ -160,19 +161,21 @@ pub fn sys_mmap(start: usize, len: usize, port: usize) -> isize {
         "kernel:pid[{}] sys_mmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    let start_va:VirtAddr = start.into();
-    let end_va :VirtAddr = (start + len).into();
+    let start_va: VirtAddr = start.into();
+    let end_va: VirtAddr = (start + len).into();
     if !start_va.aligned() || port & 0x7 == 0 || port & !0x7 != 0 {
         return -1;
     }
-    
+
     let port = MapPermission::from_bits((port as u8) << 1);
     if let (Some(task), Some(port)) = (current_task(), port) {
         let mut inner_task = task.inner_exclusive_access();
         if inner_task.memory_set.is_overlap(start_va, end_va) {
             return -1;
         }
-        inner_task.memory_set.insert_framed_area(start_va, end_va, port | MapPermission::U);
+        inner_task
+            .memory_set
+            .insert_framed_area(start_va, end_va, port | MapPermission::U);
         0
     } else {
         -1
@@ -185,9 +188,9 @@ pub fn sys_munmap(start: usize, len: usize) -> isize {
         "kernel:pid[{}] sys_munmap NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    let start_va:VirtAddr = start.into();
-    let end_va :VirtAddr = (start + len).into();
-    if !start_va.aligned()  {
+    let start_va: VirtAddr = start.into();
+    let end_va: VirtAddr = (start + len).into();
+    if !start_va.aligned() {
         return -1;
     }
     if let Some(task) = current_task() {
@@ -195,7 +198,9 @@ pub fn sys_munmap(start: usize, len: usize) -> isize {
         if !inner_task.memory_set.have_area(start_va, end_va) {
             return -1;
         }
-        inner_task.memory_set.remove_area_with_start_vpn(start_va.floor());
+        inner_task
+            .memory_set
+            .remove_area_with_start_vpn(start_va.floor());
         0
     } else {
         -1
@@ -214,25 +219,28 @@ pub fn sys_sbrk(size: i32) -> isize {
 
 /// YOUR JOB: Implement spawn.
 /// HINT: fork + exec =/= spawn
-pub fn sys_spawn(_path: *const u8) -> isize {
+pub fn sys_spawn(path: *const u8) -> isize {
     trace!(
         "kernel:pid[{}] sys_spawn NOT IMPLEMENTED",
         current_task().unwrap().pid.0
     );
-    -1
-    // let token = current_user_token();
-    // let path = translated_str(token, path);
-    // if let Some(data) = get_app_data_by_name(path.as_str()) {
-    //     let task = current_task().unwrap();
-    //     let new_task = task.spawn(data);
-    //     let new_pid = new_task.pid.0;
-    //     let trap_cx = new_task.inner_exclusive_access().get_trap_cx();
-    //     trap_cx.x[10] = 0;
-    //     add_task(new_task);
-    //     new_pid as isize
-    // } else {
-    //     -1
-    // }
+    let token = current_user_token();
+    let path = translated_str(token, path);
+    if let (Some(task), Some(inode)) = (current_task(), open_file(path.as_str(), OpenFlags::RDONLY)) {
+        if !inode.readable() {
+            return -1;
+        }
+        let data = inode.read_all();
+        let new_task = task.spawn(data.as_ref());
+        let new_pid = new_task.pid.0;
+        let trap_cx = new_task.inner_exclusive_access().get_trap_cx();
+        trap_cx.x[10] = 0;
+        add_task(new_task);
+        new_pid as isize
+    }
+    else {
+        -1
+    }
 }
 
 // YOUR JOB: Set task priority.
