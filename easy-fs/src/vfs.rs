@@ -172,7 +172,7 @@ impl Inode {
     }
     /// Clear the data in current inode
     pub fn clear(&self) {
-        let mut fs = self.fs.lock();
+        let mut fs: MutexGuard<'_, EasyFileSystem> = self.fs.lock();
         self.modify_disk_inode(|disk_inode| {
             let size = disk_inode.size;
             let data_blocks_dealloc = disk_inode.clear_size(&self.block_device);
@@ -183,4 +183,31 @@ impl Inode {
         });
         block_cache_sync_all();
     }
+
+    /// get inode id
+    pub fn get_inode_id(&self) -> usize {
+        self.fs.lock().get_inode_id(self.block_id, self.block_offset)
+    }
+
+    /// get nlink
+    pub fn get_nlink(&self) -> usize {
+        self.read_disk_inode(|disk_inode| {
+            disk_inode.nlink as usize
+        })
+    }
+
+    /// is file
+    pub fn is_file(&self) -> bool {
+        self.read_disk_inode(|disk_inode| {
+            disk_inode.is_file()
+        })
+    }
+    
+    /// is dir
+    pub fn is_dir(&self) -> bool {
+        self.read_disk_inode(|disk_inode| {
+            disk_inode.is_dir()
+        })
+    }
+    
 }
