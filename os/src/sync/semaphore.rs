@@ -34,10 +34,8 @@ impl Semaphore {
         trace!("kernel: Semaphore::up");
         let mut inner = self.inner.exclusive_access();
         inner.count += 1;
-        if inner.count <= 0 {
-            if let Some(task) = inner.wait_queue.pop_front() {
-                wakeup_task(task);
-            }
+        if let Some(task) = inner.wait_queue.pop_front() {
+            wakeup_task(task);
         }
     }
 
@@ -45,11 +43,17 @@ impl Semaphore {
     pub fn down(&self) {
         trace!("kernel: Semaphore::down");
         let mut inner = self.inner.exclusive_access();
-        inner.count -= 1;
-        if inner.count < 0 {
+        if inner.count > 0 {
+            inner.count -= 1;
+        } else {
             inner.wait_queue.push_back(current_task().unwrap());
             drop(inner);
             block_current_and_run_next();
         }
+    }
+
+    /// get count
+    pub fn get_count(&self) -> isize {
+        self.inner.exclusive_access().count
     }
 }
