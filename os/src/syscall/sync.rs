@@ -195,11 +195,13 @@ pub fn sys_semaphore_create(res_count: usize) -> isize {
         .map(|(id, _)| id)
     {
         process_inner.semaphore_list[id] = Some(Arc::new(Semaphore::new(res_count)));
+        process_inner.semaphore_max[id] = res_count;
         id
     } else {
         process_inner
             .semaphore_list
             .push(Some(Arc::new(Semaphore::new(res_count))));
+        process_inner.semaphore_max.push(res_count);
         process_inner.semaphore_list.len() - 1
     };
     id as isize
@@ -207,7 +209,7 @@ pub fn sys_semaphore_create(res_count: usize) -> isize {
 /// semaphore up syscall
 pub fn sys_semaphore_up(sem_id: usize) -> isize {
     debug!(
-        "kernel:pid[{}] tid[{}] sys_semaphore_up",
+        "kernel:pid[{}] tid[{}] sys_semaphore_up: {}",
         current_task().unwrap().process.upgrade().unwrap().getpid(),
         current_task()
             .unwrap()
@@ -215,7 +217,8 @@ pub fn sys_semaphore_up(sem_id: usize) -> isize {
             .res
             .as_ref()
             .unwrap()
-            .tid
+            .tid,
+        sem_id
     );
     let process = current_process();
     let process_inner = process.inner_exclusive_access();
@@ -224,6 +227,13 @@ pub fn sys_semaphore_up(sem_id: usize) -> isize {
     sem.up();
     if let Some(task) = current_task() {
         let mut task_inner = task.inner_exclusive_access();
+        debug!(
+            "dealloc sem: {}, tid: {}, prev: need: {:?}, allo: {:?}",
+            sem_id,
+            task_inner.res.as_ref().unwrap().tid,
+            task_inner.need_semephore,
+            task_inner.alloced_semephore
+        );
         let alloced_entry = task_inner.alloced_semephore.entry(sem_id).or_insert(0);
         *alloced_entry -= 1;
     }
@@ -232,7 +242,7 @@ pub fn sys_semaphore_up(sem_id: usize) -> isize {
 /// semaphore down syscall
 pub fn sys_semaphore_down(sem_id: usize) -> isize {
     debug!(
-        "kernel:pid[{}] tid[{}] sys_semaphore_down",
+        "kernel:pid[{}] tid[{}] sys_semaphore_down: {}",
         current_task().unwrap().process.upgrade().unwrap().getpid(),
         current_task()
             .unwrap()
@@ -240,7 +250,8 @@ pub fn sys_semaphore_down(sem_id: usize) -> isize {
             .res
             .as_ref()
             .unwrap()
-            .tid
+            .tid,
+        sem_id
     );
     // add need
     if let Some(task) = current_task() {
@@ -255,32 +266,42 @@ pub fn sys_semaphore_down(sem_id: usize) -> isize {
         let mut finish = process_inner
             .tasks
             .iter()
-            .map(|task| task.as_ref().map(|task| task.inner_exclusive_access().res.is_none()).is_none())
-            .collect::<Vec<bool>>();
-        let mut work = process_inner
-            .semaphore_list
-            .iter()
-            .map(|sem| {
-                if let Some(sem) = sem {
-                    sem.get_count().max(0) as usize
-                } else {
-                    0
-                }
+            .map(|task| {
+                task.as_ref()
+                    .map(|task| task.inner_exclusive_access().res.is_none())
+                    .is_none()
             })
-            .collect::<Vec<usize>>();
+            .collect::<Vec<bool>>();
+        // prepare available list
+        let mut work = process_inner.semaphore_max.clone();
+        process_inner.tasks.iter().for_each(|task| {
+            if let Some(task) = task {
+                let task_inner = task.inner_exclusive_access();
+                task_inner
+                    .alloced_semephore
+                    .iter()
+                    .for_each(|(sem_id, allocated)| {
+                        work[*sem_id] -= *allocated;
+                    });
+            }
+        });
         debug!("work: {:?}", work);
         debug!("finish: {:?}", finish);
+        // check is safe
         loop {
-            let task = process_inner.tasks.iter().find(|task| {
+            let task = process_inner.tasks.iter().enumerate().find(|(tid, task)| {
                 if let Some(task) = task {
                     let task_inner = task.inner_exclusive_access();
-                    let tid = if let Some(res) = task_inner.res.as_ref() {
-                        res.tid
-                    } else {
-                        return false;
-                    };
-                    debug!("tid: {}, need: {:?}", tid, task_inner.need_semephore);
-                    debug!("tid: {}, alloc : {:?}", tid, task_inner.alloced_semephore);
+                    // let tid = if let Some(res) = task_inner.res.as_ref() {
+                    //     res.tid
+                    // } else {
+                    //     return false;
+                    // };
+                    let tid = *tid;
+                    debug!(
+                        "tid: {}, need: {:?}, allo: {:?}",
+                        tid, task_inner.need_semephore, task_inner.alloced_semephore
+                    );
                     if !finish[tid]
                         && task_inner
                             .need_semephore
@@ -302,6 +323,8 @@ pub fn sys_semaphore_down(sem_id: usize) -> isize {
                     false
                 }
             });
+            debug!("work2: {:?}", work);
+            debug!("finish2: {:?}", finish);
             if task.is_none() {
                 break finish.iter().all(|ele| *ele);
             }
@@ -333,6 +356,13 @@ pub fn sys_semaphore_down(sem_id: usize) -> isize {
         sem.down();
         if let Some(task) = current_task() {
             let mut task_inner = task.inner_exclusive_access();
+            debug!(
+                "alloc sem: {}, tid: {}, prev: need: {:?}, allo: {:?}",
+                sem_id,
+                task_inner.res.as_ref().unwrap().tid,
+                task_inner.need_semephore,
+                task_inner.alloced_semephore
+            );
             let need_entry = task_inner.need_semephore.entry(sem_id).or_insert(0);
             *need_entry -= 1;
             let alloced_entry = task_inner.alloced_semephore.entry(sem_id).or_insert(0);

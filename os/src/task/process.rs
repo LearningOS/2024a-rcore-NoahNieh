@@ -47,6 +47,8 @@ pub struct ProcessControlBlockInner {
     pub mutex_list: Vec<Option<Arc<dyn Mutex>>>,
     /// semaphore list
     pub semaphore_list: Vec<Option<Arc<Semaphore>>>,
+    /// available semaphore resource
+    pub semaphore_max: Vec<usize>,
     /// condvar list
     pub condvar_list: Vec<Option<Arc<Condvar>>>,
     /// 
@@ -123,6 +125,7 @@ impl ProcessControlBlock {
                     semaphore_list: Vec::new(),
                     condvar_list: Vec::new(),
                     deadlock_detect_enable: false,
+                    semaphore_max: Vec::new(),
                 })
             },
         });
@@ -250,6 +253,7 @@ impl ProcessControlBlock {
                     semaphore_list: Vec::new(),
                     condvar_list: Vec::new(),
                     deadlock_detect_enable: false,
+                    semaphore_max: Vec::new(),
                 })
             },
         });
