@@ -1,0 +1,2166 @@
+(rustup target list | grep "riscv64gc-unknown-none-elf (installed)") || rustup target add riscv64gc-unknown-none-elf
+riscv64gc-unknown-none-elf (installed)
+cargo install cargo-binutils
+rustup component add rust-src
+rustup component add llvm-tools-preview
+Platform: qemu
+make[1]: Entering directory '/home/chayuu/os-camp/2024a-rcore-NoahNieh/user'
+target/riscv64gc-unknown-none-elf/release/ch2b_bad_address target/riscv64gc-unknown-none-elf/release/ch2b_bad_instructions target/riscv64gc-unknown-none-elf/release/ch2b_bad_register target/riscv64gc-unknown-none-elf/release/ch2b_hello_world target/riscv64gc-unknown-none-elf/release/ch2b_power_3 target/riscv64gc-unknown-none-elf/release/ch2b_power_5 target/riscv64gc-unknown-none-elf/release/ch2b_power_7 target/riscv64gc-unknown-none-elf/release/ch3b_yield0 target/riscv64gc-unknown-none-elf/release/ch3b_yield1 target/riscv64gc-unknown-none-elf/release/ch3b_yield2 target/riscv64gc-unknown-none-elf/release/ch4b_sbrk target/riscv64gc-unknown-none-elf/release/ch5b_exit target/riscv64gc-unknown-none-elf/release/ch5b_forktest target/riscv64gc-unknown-none-elf/release/ch5b_forktest2 target/riscv64gc-unknown-none-elf/release/ch5b_forktest_simple target/riscv64gc-unknown-none-elf/release/ch5b_forktree target/riscv64gc-unknown-none-elf/release/ch5b_initproc target/riscv64gc-unknown-none-elf/release/ch5b_user_shell target/riscv64gc-unknown-none-elf/release/ch5b_usertest target/riscv64gc-unknown-none-elf/release/ch6b_cat target/riscv64gc-unknown-none-elf/release/ch6b_filetest_simple target/riscv64gc-unknown-none-elf/release/ch6b_initproc target/riscv64gc-unknown-none-elf/release/ch6b_user_shell target/riscv64gc-unknown-none-elf/release/ch6b_usertest target/riscv64gc-unknown-none-elf/release/ch7b_cat target/riscv64gc-unknown-none-elf/release/ch7b_initproc target/riscv64gc-unknown-none-elf/release/ch7b_pipe_large_test target/riscv64gc-unknown-none-elf/release/ch7b_pipetest target/riscv64gc-unknown-none-elf/release/ch7b_run_pipe_test target/riscv64gc-unknown-none-elf/release/ch7b_sig_simple target/riscv64gc-unknown-none-elf/release/ch7b_sig_simple2 target/riscv64gc-unknown-none-elf/release/ch7b_sig_tests target/riscv64gc-unknown-none-elf/release/ch7b_user_shell target/riscv64gc-unknown-none-elf/release/ch7b_usertest target/riscv64gc-unknown-none-elf/release/ch7b_yield target/riscv64gc-unknown-none-elf/release/ch8b_initproc target/riscv64gc-unknown-none-elf/release/ch8b_mpsc_sem target/riscv64gc-unknown-none-elf/release/ch8b_phil_din_mutex target/riscv64gc-unknown-none-elf/release/ch8b_race_adder target/riscv64gc-unknown-none-elf/release/ch8b_race_adder_atomic target/riscv64gc-unknown-none-elf/release/ch8b_race_adder_loop target/riscv64gc-unknown-none-elf/release/ch8b_race_adder_mutex_spin target/riscv64gc-unknown-none-elf/release/ch8b_stackful_coroutine target/riscv64gc-unknown-none-elf/release/ch8b_stackless_coroutine target/riscv64gc-unknown-none-elf/release/ch8b_sync_sem target/riscv64gc-unknown-none-elf/release/ch8b_test_condvar target/riscv64gc-unknown-none-elf/release/ch8b_threads target/riscv64gc-unknown-none-elf/release/ch8b_threads_arg target/riscv64gc-unknown-none-elf/release/ch8b_user_shell target/riscv64gc-unknown-none-elf/release/ch8b_usertest
+make[1]: Leaving directory '/home/chayuu/os-camp/2024a-rcore-NoahNieh/user'
+src_path = ../user/src/bin/
+target_path = ../user/target/riscv64gc-unknown-none-elf/release/
+[rustsbi] RustSBI version 0.3.0-alpha.2, adapting to RISC-V SBI v1.0.0
+.______       __    __      _______.___________.  _______..______   __
+|   _  \     |  |  |  |    /       |           | /       ||   _  \ |  |
+|  |_)  |    |  |  |  |   |   (----`---|  |----`|   (----`|  |_)  ||  |
+|      /     |  |  |  |    \   \       |  |      \   \    |   _  < |  |
+|  |\  \----.|  `--'  |.----)   |      |  |  .----)   |   |  |_)  ||  |
+| _| `._____| \______/ |_______/       |__|  |_______/    |______/ |__|
+[rustsbi] Implementation     : RustSBI-QEMU Version 0.2.0-alpha.2
+[rustsbi] Platform Name      : riscv-virtio,qemu
+[rustsbi] Platform SMP       : 1
+[rustsbi] Platform Memory    : 0x80000000..0x88000000
+[rustsbi] Boot HART          : 0
+[rustsbi] Device Tree Region : 0x87000000..0x87000ef2
+[rustsbi] Firmware Address   : 0x80000000
+[rustsbi] Supervisor Address : 0x80200000
+[rustsbi] pmp01: 0x00000000..0x80000000 (-wr)
+[rustsbi] pmp02: 0x80000000..0x80200000 (---)
+[rustsbi] pmp03: 0x80200000..0x88000000 (xwr)
+[rustsbi] pmp04: 0x88000000..0x00000000 (-wr)
+[kernel] Hello, world!
+[34m[ INFO] .text [0x80200000, 0x80224000)[0m
+[34m[ INFO] .rodata [0x80224000, 0x8022d000)[0m
+[34m[ INFO] .data [0x8022d000, 0x8022f000)[0m
+[34m[ INFO] .bss [0x8022f000, 0x82240000)[0m
+[34m[ INFO] mapping .text section[0m
+[34m[ INFO] mapping .rodata section[0m
+[34m[ INFO] mapping .data section[0m
+[34m[ INFO] mapping .bss section[0m
+[34m[ INFO] mapping physical memory[0m
+[34m[ INFO] mapping memory-mapped registers[0m
+remap_test passed!
+/**** APPS ****
+[34m[ INFO] device features: SEG_MAX | GEOMETRY | BLK_SIZE | SCSI | FLUSH | TOPOLOGY | CONFIG_WCE | DISCARD | WRITE_ZEROES | NOTIFY_ON_EMPTY | RING_INDIRECT_DESC | RING_EVENT_IDX[0m
+[34m[ INFO] config: BlkConfig { capacity: Volatile(32768), size_max: Volatile(0), seg_max: Volatile(254), cylinders: Volatile(32), heads: Volatile(16), sectors: Volatile(63), blk_size: Volatile(512), physical_block_exp: Volatile(0), alignment_offset: Volatile(0), min_io_size: Volatile(0), opt_io_size: Volatile(0) }[0m
+[34m[ INFO] found a block device of size 16384KB[0m
+ch2b_bad_address
+ch2b_bad_instructions
+ch2b_bad_register
+ch2b_hello_world
+ch2b_power_3
+ch2b_power_5
+ch2b_power_7
+ch3_sleep
+ch3_sleep1
+ch3_taskinfo
+ch3b_yield1
+ch3b_yield2
+ch4_mmap0
+ch4_mmap1
+ch4_mmap2
+ch4_mmap3
+ch4_unmap
+ch4_unmap2
+ch4b_sbrk
+ch5_exit0
+ch5_exit1
+ch5_getpid
+ch5_setprio
+ch5_spawn0
+ch5_stride
+ch5_stride0
+ch5_stride1
+ch5_stride2
+ch5_stride3
+ch5_stride4
+ch5_stride5
+ch5_usertest
+ch5b_exit
+ch5b_forktest
+ch5b_forktest2
+ch5b_forktest_simple
+ch5b_forktree
+ch5b_initproc
+ch5b_user_shell
+ch5b_usertest
+ch6_file0
+ch6_file1
+ch6_file2
+ch6_file3
+ch6_usertest
+ch6b_cat
+ch6b_filetest_simple
+ch6b_initproc
+ch6b_user_shell
+ch6b_usertest
+ch7_usertest
+ch7b_cat
+ch7b_initproc
+ch7b_pipe_large_test
+ch7b_pipetest
+ch7b_run_pipe_test
+ch7b_sig_simple
+ch7b_sig_simple2
+ch7b_sig_tests
+ch7b_user_shell
+ch7b_usertest
+ch7b_yield
+ch8_deadlock_mutex1
+ch8_deadlock_sem1
+ch8_deadlock_sem2
+ch8_usertest
+ch8b_initproc
+ch8b_mpsc_sem
+ch8b_phil_din_mutex
+ch8b_race_adder
+ch8b_race_adder_atomic
+ch8b_race_adder_loop
+ch8b_race_adder_mutex_spin
+ch8b_stackful_coroutine
+ch8b_stackless_coroutine
+ch8b_sync_sem
+ch8b_test_condvar
+ch8b_threads
+ch8b_threads_arg
+ch8b_user_shell
+ch8b_usertest
+ch9b_initproc
+ch9b_usertest
+ch5_spawn1
+ch3b_yield0
+**************/
+Rust user shell
+>> [Ach8_deadlock_sem2
+Error when executing!
+Shell: Process 2 exited with code -4
+>> ch8_deadlock_sem2
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [4][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [3][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [2][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [1][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 2, 2][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 1, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 2, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 2, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 3, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 0, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 4, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+unlocked all semaphores
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] alloc sem: 0, tid: 1, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 3, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [2, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [2, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [2, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [3, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 2, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 4, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 4, prev: need: {0: 0, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 2, prev: need: {0: 0, 1: 0}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] alloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 0}[0m
+[32m[DEBUG] alloc sem: 1, tid: 1, prev: need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 0, 2: 1}[0m
+deadlock test semaphore 2 OK!
+Shell: Process 2 exited with code 0
+>> ch8_deadlock_sem2
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [4][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [3][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [2][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [1][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 2, 2][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 1, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 2, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 2, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 3, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 0, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 4, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+unlocked all semaphores
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 1, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [3, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [3, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 3, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 2, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 2, prev: need: {0: 0, 1: 0}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 4, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 4, prev: need: {0: 0, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [0, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [1, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] work2: [2, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] work2: [3, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 0, 2: 0}, allo: {0: 1, 2: 0}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 0, 2: 0}, allo: {0: 1, 2: 0}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] alloc sem: 1, tid: 1, prev: need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 0, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 0}[0m
+deadlock test semaphore 2 OK!
+Shell: Process 2 exited with code 0
+>> ch8_deadlock_sem2
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [4][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [3][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [2][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [1][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 2, 2][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 1, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 2, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 2, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 3, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 0, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 4, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+unlocked all semaphores
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] alloc sem: 0, tid: 1, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [1, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [3, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 3, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [2, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [2, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [2, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [3, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 2, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 4, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 4, prev: need: {0: 0, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 2, prev: need: {0: 0, 1: 0}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] alloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 0}[0m
+[32m[DEBUG] alloc sem: 1, tid: 1, prev: need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 0, 2: 1}[0m
+deadlock test semaphore 2 OK!
+Shell: Process 2 exited with code 0
+>> ch8_deadlock_sem2   1
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [3][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [2][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [1][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [3][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 2}[0m
+thread 1 running
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 1, 2, 1][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 1, prev: need: {2: 1}, allo: {}[0m
+thread 2 running
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 1, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 1, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 2, prev: need: {1: 1}, allo: {}[0m
+thread 3 running
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 3[0m
+[32m[DEBUG] work: [0, 0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 0, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {3: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {3: 1}, allo: {}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 3, tid: 3, prev: need: {3: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 1, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 0, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 1, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 0, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 0, 1, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 0, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0, 2: 1}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0, 2: 1}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0, 2: 1}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 2, prev: need: {1: 0, 2: 1}, allo: {1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [3, 0, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [3, 0, 1, 0][0m
+[32m[DEBUG] finish2: [true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+release barrier
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] alloc sem: 0, tid: 1, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [1, 0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [2, 0, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] work2: [2, 1, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 3, prev: need: {0: 1, 3: 0}, allo: {3: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [1, 0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [1, 0, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] work2: [1, 1, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [2, 1, 2, 0][0m
+[32m[DEBUG] finish2: [true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 2: 1, 3: 0}, allo: {0: 1, 3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 2: 1, 3: 0}, allo: {0: 1, 3: 1}[0m
+[32m[DEBUG] work2: [3, 1, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 2, prev: need: {0: 1, 1: 0, 2: 0}, allo: {1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 3[0m
+[32m[DEBUG] work: [0, 0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [0, 0, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0, 2: 0, 3: 1}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 2: 1, 3: 0}, allo: {0: 1, 3: 1}[0m
+[32m[DEBUG] work2: [0, 0, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sem deadlock detected[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 2, prev: need: {0: 0, 1: 0, 2: 0, 3: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 2, prev: need: {0: 0, 1: 0, 2: 0, 3: 0}, allo: {0: 0, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 2, prev: need: {0: 0, 1: 0, 2: 0, 3: 0}, allo: {0: 0, 1: 0, 2: 1}[0m
+Deadlock detected. Test 08_sem1 failed!
+[32m[DEBUG] alloc sem: 1, tid: 1, prev: need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 0, 2: 1}[0m
+[32m[DEBUG] alloc sem: 2, tid: 3, prev: need: {0: 0, 2: 1, 3: 0}, allo: {0: 1, 3: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 3, prev: need: {0: 0, 2: 0, 3: 0}, allo: {0: 1, 2: 1, 3: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 3, prev: need: {0: 0, 2: 0, 3: 0}, allo: {0: 1, 2: 0, 3: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 3[0m
+[32m[DEBUG] dealloc sem: 3, tid: 3, prev: need: {0: 0, 2: 0, 3: 0}, allo: {0: 0, 2: 0, 3: 1}[0m
+thread 3 exited
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 0, 1: 0, 2: 1}[0m
+thread 1 exited
+thread 1 done
+thread 2 done
+thread 3 done
+deadlock test semaphore 1 OK!
+Shell: Process 2 exited with code 0
+>> ch8_deadlock_sem2
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [4][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [3][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [2][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 2}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [1][0m
+[32m[DEBUG] finish: [false][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] tid: 0, need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] work2: [4][0m
+[32m[DEBUG] finish2: [true][0m
+[32m[DEBUG] alloc sem: 0, tid: 0, prev: need: {0: 1}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 2, 2][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] tid: 2, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 1, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 2, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 3, need: {}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 2, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [0, 1, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 1}, allo: {}[0m
+[32m[DEBUG] tid: 4, need: {}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 3, prev: need: {1: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [0, 0, 1][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 2][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 2][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 1}, allo: {}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 2, tid: 4, prev: need: {2: 1}, allo: {}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_down: 0[0m
+[32m[DEBUG] work: [0, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] work2: [4, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 0, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] tid: 1, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+unlocked all semaphores
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 4}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 3}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 2}[0m
+[32m[DEBUG] alloc sem: 0, tid: 1, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_down: 1[0m
+[32m[DEBUG] work: [2, 0, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] work2: [3, 0, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [3, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [4, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 3, need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 0, tid: 3, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 2, prev: need: {0: 1, 1: 0}, allo: {1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[2] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 2, prev: need: {0: 0, 1: 0}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[0] sys_semaphore_up: 0[0m
+[32m[DEBUG] dealloc sem: 0, tid: 0, prev: need: {0: 0}, allo: {0: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_down: 2[0m
+[32m[DEBUG] work: [1, 1, 0][0m
+[32m[DEBUG] finish: [false, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] work2: [1, 1, 0][0m
+[32m[DEBUG] finish2: [true, false, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] work2: [2, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, false, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] work2: [3, 1, 1][0m
+[32m[DEBUG] finish2: [true, true, true, false, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] work2: [4, 2, 1][0m
+[32m[DEBUG] finish2: [true, true, true, true, false][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] tid: 0, need: {0: 0}, allo: {0: 0}[0m
+[32m[DEBUG] tid: 1, need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] tid: 2, need: {0: 0, 1: 0}, allo: {0: 1, 1: 0}[0m
+[32m[DEBUG] tid: 3, need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] tid: 4, need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] work2: [4, 2, 2][0m
+[32m[DEBUG] finish2: [true, true, true, true, true][0m
+[32m[DEBUG] alloc sem: 1, tid: 1, prev: need: {0: 0, 1: 1, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] alloc sem: 0, tid: 4, prev: need: {0: 1, 2: 0}, allo: {2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[4] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 4, prev: need: {0: 0, 2: 0}, allo: {0: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[1] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 1, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 0, 2: 1}[0m
+[32m[DEBUG] alloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 1}, allo: {0: 1, 1: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 2[0m
+[32m[DEBUG] dealloc sem: 2, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 1}[0m
+[32m[DEBUG] kernel:pid[2] tid[3] sys_semaphore_up: 1[0m
+[32m[DEBUG] dealloc sem: 1, tid: 3, prev: need: {0: 0, 1: 0, 2: 0}, allo: {0: 1, 1: 1, 2: 0}[0m
+deadlock test semaphore 2 OK!
+Shell: Process 2 exited with code 0
+>> QEMU: Terminated
+
