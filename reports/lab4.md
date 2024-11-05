@@ -1,11 +1,22 @@
 # lab4
 
-## ch6
+## 编程实现
+
+### link, unlink
+调整`DiskInode`的结构，减少一个`direct`的索引，增加一个`nlink`存储硬连接数。添加硬链接时，通过原文件名找到文件的`inode_id`，在根目录下创建新的目录项，指向该`inode`，并增加引用数。`unlink`则反之，去掉其中的目录项，减少根目录`DiskInode`的`size`，减少引用数.
+
+### fstat
+
+给`File`trait添加一个新的接口，用于获取`stat`，对`OsInode`,`StdIn`,`StdOut`分别实现这个接口。`inode_id`通过超级块中的信息，以及`block_id`和`offset`计算。
+
+## 简答题
+
+### ch6
 
 在我们的fs中，`root_inode`存储着指向根目录目录项所在数据块的索引。如果`root_inode`损坏，无法找到文件系统中部分目录项无法被索引。
 
 
-## ch7
+### ch7
 
 1. 通过管道查看指定进程`ps aux | grep xxx`
 
